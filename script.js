@@ -1,13 +1,16 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
-// var criteriaPrompt = prompt("How long should the password be?");
+var loChar = "abcdefghijklmnopqrstuvwxyz"
+var upChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+var specChar = "~!@#$%^&*()_+"
+var numChar = "1234567890"
+
 
 
 // Write password to the #password input
 function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
- 
 
   passwordText.value = password;
 
@@ -16,59 +19,101 @@ function writePassword() {
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
 
-// creation of user input prompts for criteria
-function criteriaPrompt() {
+
+
+// create base generate function
+function generatePassword() {
   var passwordLength = prompt("How many characters between 1-128 should your password be?");
-//validation of user input with a conditional statement 
+
+//user input validation
   if (passwordLength == "") {
-    alert("password length is required!");
-    var altPasswordLength = prompt("please enter a valid number for password length");
-    console.log(passwordLength);
-    console.log(altPasswordLength);
-  }
-  else if (passwordLength<8 || passwordLength>128) {
-    alert("please choose a number within scope!");
-    newAltPasswordLength=prompt("please enter a valid number for password length");
-  };
-  //remaining user input criteria using confirm statements (true/false answer)
+        alert("password length is required!");
+        var altPasswordLength = prompt("please enter a valid number for password length");
+        console.log(passwordLength);
+        console.log(altPasswordLength);
+      }
+      else if (passwordLength<8 || passwordLength>128) {
+        alert("please choose a number within scope!");
+        newAltPasswordLength=prompt("please enter a valid number for password length");
+      };
+  let complexity=parseInt(passwordLength);
+  console.log(complexity)
+
+//prompt user for remaining password criteria
   var passwordLower= confirm("Should lowercase characters be included?");
   var passwordUpper= confirm("Should uppercase letters be included?");
   var passwordSpecial= confirm("Should special characters be included?");
   var passwordNumeric= confirm ("Should numeric values be included?");
-  
+
+  console.log(passwordLower);
+
+// Setting variable value combinations for password criteria depending on user confirm answers
+  if(passwordLower==true && passwordUpper==true && passwordSpecial==true && passwordNumeric==true){
+    var criteriaValues= loChar + upChar + specChar + numChar;
+  }
+  else if (passwordLower==true && passwordUpper==true && passwordSpecial==true && passwordNumeric==false){
+    var criteriaValues = loChar + upChar + specChar;
+  }
+  else if (passwordLower==true && passwordUpper==true && passwordSpecial==false && passwordNumeric==true){
+    var criteriaValues = loChar + upChar + numChar;
+  }
+  else if (passwordLower==true && passwordUpper==false && passwordSpecial==true && passwordNumeric==true){
+    var criteriaValues = loChar + numChar + specChar;
+  }
+  else if (passwordLower==false && passwordUpper==true && passwordSpecial==true && passwordNumeric==false){
+    var criteriaValues = numChar + upChar + specChar;
+  }
+  else if (passwordLower==true && passwordUpper==true && passwordSpecial==false && passwordNumeric==false){
+    var criteriaValues = loChar + upChar;
+  }
+  else if (passwordLower==true && passwordUpper==false && passwordSpecial==true && passwordNumeric==false){
+    var criteriaValues = loChar + specChar;
+  }
+  else if (passwordLower==false && passwordUpper==true && passwordSpecial==true && passwordNumeric==false){
+    var criteriaValues = upChar+ specChar;
+  }
+  else if (passwordLower==true && passwordUpper==false && passwordSpecial==false && passwordNumeric==true){
+    var criteriaValues = loChar + numChar;
+  }
+  else if (passwordLower==false && passwordUpper==true && passwordSpecial==false && passwordNumeric==true){
+    var criteriaValues = upChar + numChar;
+  }
+  else if (passwordLower==false && passwordUpper==false && passwordSpecial==true && passwordNumeric==true){
+    var criteriaValues = specChar + numChar;
+  }
+  else if (passwordLower==false && passwordUpper==false && passwordSpecial==false && passwordNumeric==true){
+    var criteriaValues = numChar;
+  }
+  else if (passwordLower==false && passwordUpper==false && passwordSpecial==true && passwordNumeric==false){
+    var criteriaValues = specChar;
+  }
+  else if (passwordLower==false && passwordUpper==true && passwordSpecial==false && passwordNumeric==false){
+    var criteriaValues = upChar;
+  }
+  else if (passwordLower==true && passwordUpper==false && passwordSpecial==false && passwordNumeric==false){
+    var criteriaValues = loChar;
+  }
+  else{
+    alert("You must have at least one criteria")
+  }
+
+ 
+// creating a loop for password characters to be randomized based on user input length and criteria
+
+ for (var i = 0; i < complexity; i++){
+ password= password + criteriaValues.charAt(Math.floor(Math.random()* Math.floor(criteriaValues.length -1)));
 }
-generateBtn.addEventListener("click", criteriaPrompt);
+console.log(password);
+document.getElementById("password").value=password;
+}
 
 
 
+// console.log(passwordnew);
+// console.log(generatePassword());
 
-// create base generate function
-// function generate() {
-//   let complexity=passwordLength.value;
-//   let values="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()";
-//   let passwordnew="";
-// }
-// console.log(generate);
-
-// create loop for password characters to be randomized 
-
-// for (var i=0; i<=complexity;i++){
-//   password=passwordnew + values.charAt(Math.floor(Math.random()* Math.floor(values.length -1)));
-
-// }
-
-
-// if (true){
-//   generateBtn.addEventListener("click", function(){prompt("How long should the password be?")});
-
-  // function passGen(){
-  //   var criteriaPrompt = prompt("How long should the password be?");
-  // }
-    // generateBtn.addEventListener("click",console.log("this worked!"));
-  
-// if (generateBtn.addEventListener("click")) {
-//   var passwordLength = prompt("How long do you want your password to be?");
-// }
+//add password to textbox/display 
+// document.getElementById("").value="password"
 
 
 
