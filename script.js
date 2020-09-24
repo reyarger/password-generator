@@ -1,24 +1,9 @@
-// Assignment Code
+// Assignment Code (creating variables to use later in the code)
 var generateBtn = document.querySelector("#generate");
 var loChar = "abcdefghijklmnopqrstuvwxyz"
 var upChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 var specChar = "~!@#$%^&*()_+"
 var numChar = "1234567890"
-
-
-
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
-
-}
-
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
-
 
 
 // create base generate function
@@ -39,7 +24,7 @@ function generatePassword() {
   let complexity=parseInt(passwordLength);
   console.log(complexity)
 
-//prompt user for remaining password criteria
+//prompt user to confirm the remaining password criteria
   var passwordLower= confirm("Should lowercase characters be included?");
   var passwordUpper= confirm("Should uppercase letters be included?");
   var passwordSpecial= confirm("Should special characters be included?");
@@ -97,25 +82,19 @@ function generatePassword() {
     alert("You must have at least one criteria")
   }
 
- 
 // creating a loop for password characters to be randomized based on user input length and criteria
-
+ let password = "";
  for (var i = 0; i < complexity; i++){
  password= password + criteriaValues.charAt(Math.floor(Math.random()* Math.floor(criteriaValues.length -1)));
 }
-console.log(password);
-document.getElementById("password").value=password;
+
+// overriding the password display placeholder with the new password result
+var passwordText=document.querySelector("#password");
+passwordText.value=password;
 }
 
-
-
-// console.log(passwordnew);
-// console.log(generatePassword());
-
-//add password to textbox/display 
-// document.getElementById("").value="password"
-
-
+// Calling on generate new password function to run
+generateBtn.addEventListener("click", generatePassword);
 
 
 // GIVEN I need a new, secure password
